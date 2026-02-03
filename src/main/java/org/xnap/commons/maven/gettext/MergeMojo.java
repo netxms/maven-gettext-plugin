@@ -17,6 +17,9 @@ package org.xnap.commons.maven.gettext;
  */
 
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 import org.codehaus.plexus.util.DirectoryScanner;
 import org.codehaus.plexus.util.cli.CommandLineException;
 import org.codehaus.plexus.util.cli.CommandLineUtils;
@@ -29,34 +32,27 @@ import java.io.File;
  * Invokes the gettext:gettext goal and invokes msgmerge to update po files.
  *
  * @author Tammo van Lessen
- * @goal merge
- * @phase generate-resources
  */
+@Mojo(name = "merge", defaultPhase = LifecyclePhase.GENERATE_RESOURCES)
 public class MergeMojo
         extends AbstractGettextMojo {
 
     /**
      * The msgmerge command.
-     *
-     * @parameter property="msgmergeCmd" default-value="msgmerge"
-     * @required
      */
+    @Parameter(property = "msgmergeCmd", defaultValue = "msgmerge", required = true)
     protected String msgmergeCmd;
 
     /**
-     * The msgmerge backup mode: none, numbered, existing, simple
-     *
-     * @parameter property="backup" default-value="none"
-     * @required
+     * The msgmerge backup mode: none, numbered, existing, simple.
      */
+    @Parameter(property = "backup", defaultValue = "none", required = true)
     protected String backup;
 
     /**
-     * Sort extracted messages, can be "output" or "by-file"
-     *
-     * @parameter property="sort" default-value="by-file"
-     * @required
+     * Sort extracted messages, can be "output" or "by-file".
      */
+    @Parameter(property = "sort", defaultValue = "by-file", required = true)
     protected String sort;
 
     /**
@@ -64,9 +60,8 @@ public class MergeMojo
      * passes --no-fuzzy-matching to msgmerge so that only exact
      * matches are used. Unmatched strings will appear as
      * untranslated rather than receiving inaccurate fuzzy guesses.
-     *
-     * @parameter property="noFuzzyMatching" default-value="false"
      */
+    @Parameter(property = "noFuzzyMatching", defaultValue = "false")
     protected boolean noFuzzyMatching;
 
     public void execute()

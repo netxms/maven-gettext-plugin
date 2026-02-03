@@ -17,6 +17,9 @@ package org.xnap.commons.maven.gettext;
  */
 
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 import org.codehaus.plexus.util.DirectoryScanner;
 import org.codehaus.plexus.util.cli.CommandLineException;
 import org.codehaus.plexus.util.cli.CommandLineUtils;
@@ -28,18 +31,16 @@ import java.io.File;
 /**
  * Invokes the gettext:gettext goal and invokes msgattrib to update po files.
  *
- * @goal attrib
- * @phase generate-resources
  * @author Tammo van Lessen
  */
+@Mojo(name = "attrib", defaultPhase = LifecyclePhase.GENERATE_RESOURCES)
 public class AttribMojo
     extends AbstractGettextMojo {
 	
     /**
      * The msgattrib command.
-     * @parameter property="msgattribCmd" default-value="msgattrib"
-     * @required 
      */
+    @Parameter(property = "msgattribCmd", defaultValue = "msgattrib", required = true)
     protected String msgattribCmd;
     
     public void execute()

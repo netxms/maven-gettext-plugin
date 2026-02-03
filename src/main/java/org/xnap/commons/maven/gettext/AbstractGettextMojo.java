@@ -19,6 +19,7 @@ package org.xnap.commons.maven.gettext;
 import java.io.File;
 
 import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugins.annotations.Parameter;
 
 /**
  *
@@ -29,53 +30,43 @@ public abstract class AbstractGettextMojo
 	
 	/**
      * The output directory for generated class or properties files.
-     * @parameter property="outputDirectory" default-value="${project.build.outputDirectory}"
-     * @required
      */
+    @Parameter(property = "outputDirectory", defaultValue = "${project.build.outputDirectory}", required = true)
     protected File outputDirectory;
 
     /**
      * Source directory. This directory is searched recursively for .java files.
-     * @parameter property="sourceDirectory" default-value="${project.build.sourceDirectory}"
-     * @required
      */
+    @Parameter(property = "sourceDirectory", defaultValue = "${project.build.sourceDirectory}", required = true)
     protected File sourceDirectory;
     
     /**
-     * The output directory for the keys.pot directory for merging .po files. 
-     * @parameter property="poDirectory" default-value="${project.build.sourceDirectory}/main/po"
-     * @required
+     * The output directory for the keys.pot directory for merging .po files.
      */
+    @Parameter(property = "poDirectory", defaultValue = "${project.build.sourceDirectory}/main/po", required = true)
     protected File poDirectory;
     
     /**
      * Filename of the .pot file.
-     * @parameter property="keysFile" default-value="keys.pot"
-     * @required
      */
+    @Parameter(property = "keysFile", defaultValue = "keys.pot", required = true)
     protected String keysFile;
 
     /**
-     * Extra arguments for the cmd-line
-     * @parameter property="extraArgs"
+     * Extra arguments for the cmd-line.
      */
+    @Parameter(property = "extraArgs")
     protected String[] extraArgs;
 
-    /**
-     * @parameter property="includes"
-     */
+    @Parameter(property = "includes")
     protected String[] includes;
 
-    /**
-     * @parameter property="excludes"
-     */
+    @Parameter(property = "excludes")
     protected String[] excludes;
 
     /**
-     * Print POT-Creation-Date header to po files
-     *
-     * @parameter property="printPOTCreationDate" default-value="false"
-     * @required
+     * Print POT-Creation-Date header to po files.
      */
+    @Parameter(property = "printPOTCreationDate", defaultValue = "false", required = true)
     protected boolean printPOTCreationDate;
 }

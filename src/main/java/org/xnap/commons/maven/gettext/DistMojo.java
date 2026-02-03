@@ -17,6 +17,9 @@ package org.xnap.commons.maven.gettext;
  */
 
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 import org.codehaus.plexus.util.DirectoryScanner;
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.cli.CommandLineException;
@@ -32,73 +35,57 @@ import java.nio.file.Files;
  * Generates ressource bundles.
  *
  * @author Tammo van Lessen
- * @goal dist
- * @phase generate-resources
  */
+@Mojo(name = "dist", defaultPhase = LifecyclePhase.GENERATE_RESOURCES)
 public class DistMojo
         extends AbstractGettextMojo {
 
     /**
      * The msgcat command.
-     *
-     * @parameter property="msgcatCmd" default-value="msgcat"
-     * @required
      */
+    @Parameter(property = "msgcatCmd", defaultValue = "msgcat", required = true)
     protected String msgcatCmd;
 
     /**
      * The msgfmt command.
-     *
-     * @parameter property="msgfmtCmd" default-value="msgfmt"
-     * @required
      */
+    @Parameter(property = "msgfmtCmd", defaultValue = "msgfmt", required = true)
     protected String msgfmtCmd;
 
     /**
      * The package and file name of the generated class or properties files.
-     *
-     * @parameter property="targetBundle"
-     * @required
      */
+    @Parameter(property = "targetBundle", required = true)
     protected String targetBundle;
 
     /**
      * Output format, can be "class", "properties", or "java".
-     *
-     * @parameter property="outputFormat" default-value="class"
-     * @required
      */
+    @Parameter(property = "outputFormat", defaultValue = "class", required = true)
     protected String outputFormat;
 
     /**
      * Java version. Can be "1" or "2".
-     *
-     * @parameter property="javaVersion" default-value="2"
-     * @required
      */
+    @Parameter(property = "javaVersion", defaultValue = "2", required = true)
     protected String javaVersion;
 
     /**
      * The locale of the messages in the source code.
-     *
-     * @parameter property="sourceLocale" default-value="en"
-     * @required
      */
+    @Parameter(property = "sourceLocale", defaultValue = "en", required = true)
     protected String sourceLocale;
 
     /**
-     * Use unicode escape sequences when printing non-ASCII characters
-     *
-     * @parameter property="escapeUnicode" default-value="false"
-     * @required
+     * Use unicode escape sequences when printing non-ASCII characters.
      */
+    @Parameter(property = "escapeUnicode", defaultValue = "false", required = true)
     protected boolean escapeUnicode;
 
     /**
      * The encoding of the source Java files. utf-8 is a superset of ascii.
-     *
-     * @parameter property="encoding" default-value="utf-8"
      */
+    @Parameter(property = "encoding", defaultValue = "utf-8")
     protected String encoding;
 
     public void execute()

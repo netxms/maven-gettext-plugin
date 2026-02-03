@@ -35,6 +35,9 @@ import java.util.regex.Pattern;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.reporting.AbstractMavenReport;
 import org.apache.maven.reporting.MavenReportException;
@@ -51,50 +54,36 @@ import org.codehaus.plexus.util.cli.WriterStreamConsumer;
  * Goal that generates a report.
  *
  * @author Steffen Pingel
- * @goal report
- * @phase process-sources
  */
+@Mojo(name = "report", defaultPhase = LifecyclePhase.PROCESS_SOURCES)
 public class ReportMojo extends AbstractMojo {
     private static final Pattern TRANSLATOR_PATTERN = Pattern.compile("\"Last-Translator: (?<name>.*)\"", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
 
     /**
      * Specifies the directory where the report will be generated.
-     *
-     * @parameter property="outputDirectory" default-value="${project.reporting.outputDirectory}"
-     * @required
      */
+    @Parameter(property = "outputDirectory", defaultValue = "${project.reporting.outputDirectory}", required = true)
     private File outputDirectory;
 
-    /**
-     * @parameter default-value="${project}"
-     * @required
-     * @readonly
-     */
+    @Parameter(defaultValue = "${project}", required = true, readonly = true)
     private MavenProject project;
 
     /**
      * PO directory.
-     *
-     * @parameter property="poDirectory" default-value="${project.build.sourceDirectory}/main/po"
-     * @required
      */
+    @Parameter(property = "poDirectory", defaultValue = "${project.build.sourceDirectory}/main/po", required = true)
     protected File poDirectory;
 
     /**
-     * @description msgfmt command.
-     * @parameter property="msgfmtCmd" default-value="msgfmt"
-     * @required
+     * The msgfmt command.
      */
+    @Parameter(property = "msgfmtCmd", defaultValue = "msgfmt", required = true)
     protected String msgfmtCmd;
 
-    /**
-     * @parameter property="includes"
-     */
+    @Parameter(property = "includes")
     protected String[] includes;
 
-    /**
-     * @parameter property="excludes"
-     */
+    @Parameter(property = "excludes")
     protected String[] excludes;
 
     protected PrintStream out;

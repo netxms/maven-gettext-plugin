@@ -18,6 +18,9 @@ package org.xnap.commons.maven.gettext;
 
 import org.apache.maven.model.FileSet;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 import org.codehaus.plexus.util.DirectoryScanner;
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.StringUtils;
@@ -36,52 +39,40 @@ import java.util.List;
 
 /**
  * Invokes xgettext to extract messages from source code and store them in the keys.pot file.
- *
- * @goal gettext
- * @phase generate-resources
  */
+@Mojo(name = "gettext", defaultPhase = LifecyclePhase.GENERATE_RESOURCES)
 public class GettextMojo
         extends AbstractGettextMojo {
 
     /**
      * The encoding of the source Java files. utf-8 is a superset of ascii.
-     *
-     * @parameter property="encoding" default-value="utf-8"
      */
+    @Parameter(property = "encoding", defaultValue = "utf-8")
     protected String encoding;
 
     /**
      * The keywords the xgettext parser will look for to extract messages. The default value works
      * with the Gettext Commons library.
-     *
-     * @parameter property="keywords" default-value="-ktrc:1c,2 -ktrnc:1c,2,3 -ktr -kmarktr
-     * -ktrn:1,2 -k"
-     * @required
      */
+    @Parameter(property = "keywords", defaultValue = "-ktrc:1c,2 -ktrnc:1c,2,3 -ktr -kmarktr -ktrn:1,2 -k", required = true)
     protected String keywords;
 
     /**
      * The xgettext command.
-     *
-     * @parameter property="xgettextCmd" default-value="xgettext"
-     * @required
      */
+    @Parameter(property = "xgettextCmd", defaultValue = "xgettext", required = true)
     protected String xgettextCmd;
 
     /**
-     * Sort extracted messages, can be "output" or "by-file"
-     *
-     * @parameter property="sort" default-value="by-file"
-     * @required
+     * Sort extracted messages, can be "output" or "by-file".
      */
+    @Parameter(property = "sort", defaultValue = "by-file", required = true)
     protected String sort;
 
     /**
-     * Do not break long message lines, longer than the output page width, into several lines
-     *
-     * @parameter property="nowrap" default-value="false"
-     * @required
+     * Do not break long message lines, longer than the output page width, into several lines.
      */
+    @Parameter(property = "nowrap", defaultValue = "false", required = true)
     protected boolean nowrap;
 
     /**
@@ -99,9 +90,8 @@ public class GettextMojo
      * </extraSourceFiles>
      * }
      * </pre>
-     *
-     * @parameter property="extraSourceFiles"
      */
+    @Parameter(property = "extraSourceFiles")
     protected FileSet extraSourceFiles;
 
     public void execute()
