@@ -26,8 +26,8 @@ import org.apache.maven.plugins.annotations.Parameter;
  */
 public abstract class AbstractGettextMojo
     extends AbstractMojo {
-	
-	
+
+
 	/**
      * The output directory for generated class or properties files.
      */
@@ -39,13 +39,13 @@ public abstract class AbstractGettextMojo
      */
     @Parameter(property = "sourceDirectory", defaultValue = "${project.build.sourceDirectory}", required = true)
     protected File sourceDirectory;
-    
+
     /**
      * The output directory for the keys.pot directory for merging .po files.
      */
     @Parameter(property = "poDirectory", defaultValue = "${project.build.sourceDirectory}/main/po", required = true)
     protected File poDirectory;
-    
+
     /**
      * Filename of the .pot file.
      */

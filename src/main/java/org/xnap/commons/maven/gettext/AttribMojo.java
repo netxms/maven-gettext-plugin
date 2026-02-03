@@ -36,19 +36,19 @@ import java.io.File;
 @Mojo(name = "attrib", defaultPhase = LifecyclePhase.GENERATE_RESOURCES)
 public class AttribMojo
     extends AbstractGettextMojo {
-	
+
     /**
      * The msgattrib command.
      */
     @Parameter(property = "msgattribCmd", defaultValue = "msgattrib", required = true)
     protected String msgattribCmd;
-    
+
     public void execute()
         throws MojoExecutionException
     {
 		getLog().info("Invoking msgattrib for po files in '"
 				+ poDirectory.getAbsolutePath() + "'.");
-		
+
 		DirectoryScanner ds = new DirectoryScanner();
     	ds.setBasedir(poDirectory);
 		if (includes != null && includes.length > 0) {
@@ -71,7 +71,7 @@ public class AttribMojo
         	cl.createArg().setValue("-o");
         	cl.createArg().setFile(new File(poDirectory, files[i]));
         	cl.createArg().setFile(new File(poDirectory, files[i]));
-        	
+
         	getLog().debug("Executing: " + cl.toString());
     		StreamConsumer out = new LoggerStreamConsumer(getLog(), LoggerStreamConsumer.INFO);
     		StreamConsumer err = new LoggerStreamConsumer(getLog(), LoggerStreamConsumer.WARN);

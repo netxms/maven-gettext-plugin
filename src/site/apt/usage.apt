@@ -31,20 +31,20 @@ Usage
 
 *How to use the plugin
 
- Update pot and po files: 
+ Update pot and po files:
 
 -------------------
 mvn org.xnap.commons:maven-gettext-plugin:merge
 -------------------
 
- Create properties/classs files: 
+ Create properties/classs files:
 
 -------------------
 mvn org.xnap.commons:maven-gettext-plugin:1.0:dist
 -------------------
 
 *How to Generate the Gettext Report
- 
+
 -------------------
   <pluginRepositories>
     <pluginRepository>
