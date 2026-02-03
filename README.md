@@ -3,6 +3,10 @@ Continuation of the maven2 gettext plugin from googlecode
 
 # Changelog
 
+## 1.5.0
+
+* Add `noFuzzyMatching` option to disable fuzzy matching in `msgmerge`
+
 ## 1.4.0
 
 * Add option to unescape unicode characters in generated `.java` files

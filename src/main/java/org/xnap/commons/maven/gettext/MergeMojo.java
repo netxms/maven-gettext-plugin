@@ -59,6 +59,16 @@ public class MergeMojo
      */
     protected String sort;
 
+    /**
+     * Disable fuzzy matching when merging. When set to true,
+     * passes --no-fuzzy-matching to msgmerge so that only exact
+     * matches are used. Unmatched strings will appear as
+     * untranslated rather than receiving inaccurate fuzzy guesses.
+     *
+     * @parameter property="noFuzzyMatching" default-value="false"
+     */
+    protected boolean noFuzzyMatching;
+
     public void execute()
             throws MojoExecutionException {
         getLog().info("Invoking msgmerge for po files in '"
@@ -88,6 +98,9 @@ public class MergeMojo
             cl.createArg().setValue("-q");
             cl.createArg().setValue("--backup=" + backup);
             cl.createArg().setValue("-U");
+            if (noFuzzyMatching) {
+                cl.createArg().setValue("--no-fuzzy-matching");
+            }
             File file = new File(poDirectory, fileName);
             cl.createArg().setFile(file);
             cl.createArg().setValue(new File(poDirectory, keysFile).getAbsolutePath());
